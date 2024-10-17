@@ -11,7 +11,14 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                
+                List {
+                    ForEach(0...5, id: \.self) { value in
+                        VStack(alignment: .leading) {
+                            Text("Calories: 200")
+                            Text("Food Eaten: Apple")
+                        }
+                    }
+                }
             }
             .navigationTitle("Calorie App 🍔")
             .toolbar {
@@ -20,7 +27,6 @@ struct ContentView: View {
                         .foregroundStyle(.black)
                         .onTapGesture {
                             // show the add food view
-                            
                         }
                 }
             }
