@@ -28,12 +28,17 @@ struct ContentView: View {
             .navigationTitle("Calorie App 🍔")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Image(systemName: "plus.circle")
-                        .foregroundStyle(.black)
-                        .onTapGesture {
-                            // show the add food view
-                        }
+                    Button {
+                        foodList.showAddFoodView.toggle()
+                    } label: {
+                        Image(systemName: "plus.circle")
+                            .foregroundStyle(.black)
+                    }
+
                 }
+            }
+            .sheet(isPresented: $foodList.showAddFoodView) {
+                AddFoodView(foodList: foodList)
             }
         }
         
