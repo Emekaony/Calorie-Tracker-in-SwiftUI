@@ -44,9 +44,14 @@ struct AddFoodView: View {
                 .frame(height: 20)
             
             Button {
-                if !food.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                let foodIsEmpty = food.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                let calorieIsEmpty = calorie.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                if foodIsEmpty && calorieIsEmpty {
                     foodText = "You MUST enter a meal to continue"
-                } else if !calorie.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    calorieText = "You MUST enter calories to continue"
+                } else if foodIsEmpty {
+                    foodText = "You MUST enter a meal to continue"
+                } else if calorieIsEmpty {
                     calorieText = "You MUST enter calories to continue"
                 } else {
                     foodList.addFood(food: Food(name: food, calories: calorie))

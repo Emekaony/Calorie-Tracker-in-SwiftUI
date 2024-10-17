@@ -12,15 +12,35 @@ struct ContentView: View {
     // we actually create the instance of the foodList here
     // in the contentView screen
     @ObservedObject var foodList: FoodList = FoodList()
+    @State private var showDeleteAlert: Bool = false
     
     var body: some View {
         NavigationStack {
             VStack {
                 List {
-                    ForEach(0...5, id: \.self) { value in
-                        VStack(alignment: .leading) {
-                            Text("Calories: 200")
-                            Text("Food Eaten: Apple")
+                    ForEach(foodList.foods, id: \.id) { food in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text("Calories: \(food.calories)")
+                                Text("Food Eaten: \(food.name)")
+                            }
+                            Spacer()
+                            Button {
+                                showDeleteAlert.toggle()
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundStyle(.red)
+                            }
+                        }
+                        .alert("Are you sure you want to delete this item?", isPresented: $showDeleteAlert) {
+                            Button("yes", role: .destructive) {
+                                // delete it
+                                foodList.deleteFood(food: food)
+                                showDeleteAlert.toggle()
+                            }
+                            Button("No", role: .cancel) {
+                                showDeleteAlert.toggle()
+                            }
                         }
                     }
                 }
