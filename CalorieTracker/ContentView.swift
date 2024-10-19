@@ -30,18 +30,20 @@ struct ContentView: View {
                             } label: {
                                 Image(systemName: "trash")
                                     .foregroundStyle(.red)
+                                    .alert("Are you sure you want to delete this item?", isPresented: $showDeleteAlert) {
+                                        Button("yes", role: .destructive) {
+                                            // delete it
+                                            foodList.deleteFood(food: food)
+                                            showDeleteAlert.toggle()
+                                        }
+                                        Button("No", role: .cancel) {
+                                            showDeleteAlert.toggle()
+                                        }
+                                    }
                             }
+                          
                         }
-                        .alert("Are you sure you want to delete this item?", isPresented: $showDeleteAlert) {
-                            Button("yes", role: .destructive) {
-                                // delete it
-                                foodList.deleteFood(food: food)
-                                showDeleteAlert.toggle()
-                            }
-                            Button("No", role: .cancel) {
-                                showDeleteAlert.toggle()
-                            }
-                        }
+                        
                     }
                 }
             }
