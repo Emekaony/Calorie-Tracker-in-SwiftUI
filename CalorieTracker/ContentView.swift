@@ -25,23 +25,22 @@ struct ContentView: View {
                                 Text("Food Eaten: \(food.name)")
                             }
                             Spacer()
-                            Button {
-                                showDeleteAlert.toggle()
-                            } label: {
-                                Image(systemName: "trash")
-                                    .foregroundStyle(.red)
-                                    .alert("Are you sure you want to delete this item?", isPresented: $showDeleteAlert) {
-                                        Button("yes", role: .destructive) {
-                                            // delete it
-                                            foodList.deleteFood(food: food)
-                                            showDeleteAlert.toggle()
-                                        }
-                                        Button("No", role: .cancel) {
-                                            showDeleteAlert.toggle()
-                                        }
+                            Image(systemName: "trash")
+                                .foregroundStyle(.red)
+                                .onTapGesture {
+                                    showDeleteAlert.toggle()
+                                }
+                                .alert("Are you sure you want to delete this item?", isPresented: $showDeleteAlert) {
+                                    Button("yes", role: .destructive) {
+                                        // delete it
+                                        foodList.deleteFood(food: food)
+                                        showDeleteAlert.toggle()
                                     }
-                            }
-                          
+                                    Button("No", role: .cancel) {
+                                        showDeleteAlert.toggle()
+                                    }
+                                }
+                            
                         }
                         
                     }
@@ -56,7 +55,7 @@ struct ContentView: View {
                         Image(systemName: "plus.circle")
                             .foregroundStyle(.black)
                     }
-
+                    
                 }
             }
             .sheet(isPresented: $foodList.showAddFoodView) {
